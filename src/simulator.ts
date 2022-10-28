@@ -52,9 +52,9 @@ export class Simulator {
         this.app.stage.removeChildren();
     }
 
-    animator(animator: Animator) {
+    animator(animator: Animator, removeOld = false) {
         let t = 0.0; // milliseconds
-        if (this.__tickerCb) {
+        if (this.__tickerCb && removeOld) {
             this.app.ticker.remove(this.__tickerCb);
         }
         this.__tickerCb = (delta) => {

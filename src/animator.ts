@@ -51,3 +51,27 @@ export class SoundWaveAnimator extends Animator {
             })
         }
 }
+
+export class CircularMotionAnimator extends Animator {
+    constructor(
+        private readonly RADIUS: number,
+        private readonly SPEED: number,
+        private readonly ALPHA: number,
+    ) {
+        super();
+    }
+
+    tick(particles: Particle[][], params: AnimatorParams): void {
+        particles.forEach((line, yi) => {
+            line.forEach((p) => {
+                const center = p.center;
+                const angle = params.time * this.SPEED;
+
+                const effRadius = this.RADIUS * (particles.length - yi) * this.ALPHA
+
+                p.x = center.x + effRadius * Math.cos(angle);
+                p.y = center.y + effRadius * Math.sin(angle);
+            })
+        })
+    }
+}

@@ -1,6 +1,6 @@
 import "./style.css"
 import {Simulator} from "./simulator";
-import {SineWaveAnimator, SoundWaveAnimator} from "./animator";
+import {CircularMotionAnimator, SineWaveAnimator, SoundWaveAnimator} from "./animator";
 
 async function sleep(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -9,7 +9,7 @@ async function sleep(ms: number) {
 async function main() {
     const simulator = new Simulator({
         pixiOptions: {
-            backgroundColor: 0xeeeeee,
+            backgroundColor: 0xEEEEEE,
             resizeTo: window
         },
         className: "pixi-canvas",
@@ -18,29 +18,20 @@ async function main() {
             distanceX: 8,
             distanceY: 8,
             size: 2,
-            color: 0xFF0000,
             margins: {
-                top: 150,
-                bottom: 50,
-                left: -200,
-                right: -200
+                top: 100,
+                bottom: 100,
+                left: 100,
+                right: 100
             }
         }
     })
 
-    simulator.generate() // generate particles grid
-    const sineWaveAnimator = new SineWaveAnimator(1/400, 1/800, 50);
-    simulator.animator(sineWaveAnimator); // set animator
+    simulator.generate({ color: 0x111111 }) // generate particles grid
+    // simulator.animator(new CircularMotionAnimator(5, 1/100, 1/100)); // set animator
+    simulator.animator(new SineWaveAnimator(1/200, 1/400, 20)); // set animator
+    simulator.animator(new SoundWaveAnimator(1/200, 1/400, 20)); // set animator
     simulator.start(); // start animation
-
-    await sleep(5000);
-    simulator.reset() // stop animation and remove particles
-    await sleep(1000);
-
-    simulator.generate()
-    const soundWaveAnimator = new SoundWaveAnimator(1/400, 1/800, 50);
-    simulator.animator(soundWaveAnimator);
-    simulator.start();
 
 }
 

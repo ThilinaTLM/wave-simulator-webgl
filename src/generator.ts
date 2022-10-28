@@ -16,14 +16,14 @@ export interface ParticleGeneratorOptions {
 
 export class Generator {
 
-    private _options: ParticleGeneratorOptions;
+    private readonly _options: ParticleGeneratorOptions;
 
     constructor(options?: ParticleGeneratorOptions) {
         options = options || {}
         // fallback to default _options
         this._options = {
             size: options.size || 2,
-            color: options.color || 0xFF0000,
+            color: (options.color === undefined)? options.color: 0xFF0000,
             distanceX: options.distanceX || 5,
             distanceY: options.distanceY || 5,
             margins: {
